@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+      - media_data:/code/media
+    environment:
+      - DEBUG=1
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_DATABASE: secure_db
+      MYSQL_USER: secure_user
+      MYSQL_PASSWORD: secure_pass
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  media_data:
+  mysql_data:

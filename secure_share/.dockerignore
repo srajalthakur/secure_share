@@ -1,0 +1,21 @@
+# Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local environment
+*.env
+.env
+
+# SQLite (if present)
+*.sqlite3
+
+# Media and static files
+media/
+static/
+
+# System files
+.DS_Store
+.vscode/
+.idea/

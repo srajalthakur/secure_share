@@ -1,0 +1,15 @@
+{% extends 'api/base.html' %}
+{% block title %}Register | Secure Share{% endblock %}
+{% block content %}
+<div class="card p-4 mb-4 mx-auto" style="max-width:500px;">
+    <h3>Register</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+    <div class="mt-2">
+        <a href="{% url 'login' %}">Already have an account? Login</a>
+    </div>
+</div>
+{% endblock %}

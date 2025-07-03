@@ -1,0 +1,36 @@
+{% extends 'api/base.html' %}
+{% load secure_tags %}
+{% block title %}Dashboard | Secure Share{% endblock %}
+{% block content %}
+<div class="mb-3 d-flex justify-content-between align-items-center">
+    <h4>Welcome, {{ user.username }} ({{ user_type }})</h4>
+    <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
+</div>
+<div class="card p-4 mb-4">
+    <h5>Upload File</h5>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ upload_form.as_p }}
+        <button type="submit" class="btn btn-success">Upload</button>
+    </form>
+</div>
+<div class="card p-4">
+    <h5>Shared Files</h5>
+    <ul class="list-group">
+        {% for file in files %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ file.file.name|cut:'uploads/' }}
+                <span>
+                    {% if user.is_client %}
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#secureLinkModal" data-link="{{ secure_links|get_item:file.id }}">Download</button>
+                    {% else %}
+                        <a href="{{ file.file.url }}" class="btn btn-sm btn-primary" download>Download</a>
+                    {% endif %}
+                </span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No files uploaded yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
